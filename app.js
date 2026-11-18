@@ -553,7 +553,25 @@ function init() {
     window.ethereum.on("chainChanged", () => updateNetworkState());
   }
 
+  // Shareable "tip me" links: ?to=<handle>&amount=<bnb> prefills the form,
+  // so a link like tip-jar/?to=abdullahparvez&amount=0.00001 opens with
+  // the recipient and amount already filled in (the agent prompt follows).
+  const params = new URLSearchParams(window.location.search);
+  const toParam = params.get("to");
+  if (toParam) {
+    const handle = normalizeHandle(toParam);
+    if (handle) $("handle-input").value = handle + ".ai";
+  }
+  const amountParam = params.get("amount");
+  if (amountParam) {
+    const amount = Number(amountParam);
+    if (Number.isFinite(amount) && amount > 0) {
+      $("amount-input").value = amountParam;
+    }
+  }
+
   refreshAgentPrompt();
+  if ($("handle-input").value) resolveCurrentHandle();
   refreshStats();
   loadRecentTips();
 }
