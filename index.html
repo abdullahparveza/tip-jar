@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tip Jar — Tip any Agent ID holder by their .ai name</title>
+  <meta name="description" content="Tip Jar lets Agent ID holders tip each other by .ai name. Tips go straight to the recipient — the contract never holds funds." />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Tip Jar</h1>
+      <p class="tagline">Tip any Agent ID holder by their .ai name.</p>
+    </header>
+
+    <div id="deploy-banner" class="banner" hidden>
+      The Tip Jar contract is not deployed yet. Tipping and stats will be
+      available once the contract address is set.
+    </div>
+
+    <section class="card" id="wallet-card">
+      <div class="wallet-row">
+        <div>
+          <h2>Wallet</h2>
+          <p id="wallet-status" class="muted">Not connected</p>
+          <p id="holder-status" class="muted" hidden></p>
+        </div>
+        <button id="connect-btn" class="btn primary">Connect wallet</button>
+      </div>
+      <p id="network-warning" class="warning" hidden>
+        You are not on BSC (chain 56).
+        <button id="switch-network-btn" class="btn small">Switch network</button>
+      </p>
+    </section>
+
+    <section class="card" id="tip-card">
+      <h2>Send a tip</h2>
+      <label class="field">
+        <span>Recipient .ai name</span>
+        <input
+          id="handle-input"
+          type="text"
+          placeholder="abdullahparvez.ai"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </label>
+      <p id="resolve-status" class="muted">Enter a name to see the recipient address.</p>
+
+      <label class="field">
+        <span>Amount (BNB)</span>
+        <input
+          id="amount-input"
+          type="number"
+          min="0"
+          step="0.0001"
+          placeholder="0.001"
+          inputmode="decimal"
+        />
+      </label>
+
+      <button id="tip-btn" class="btn primary large">Send tip</button>
+      <p id="tip-status" class="status" role="status"></p>
+    </section>
+
+    <section class="card" id="stats-card">
+      <h2>Stats</h2>
+      <div class="stats-grid">
+        <div class="stat">
+          <span class="stat-label">Total tips</span>
+          <span class="stat-value" id="stat-total-tips">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Total volume</span>
+          <span class="stat-value" id="stat-total-volume">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">You have sent</span>
+          <span class="stat-value" id="stat-your-sent">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="recent-card">
+      <h2>Recent tips</h2>
+      <ul id="recent-tips" class="tips-list">
+        <li class="muted">Loading…</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>
+        Tips are sent directly to the recipient's wallet — the contract never
+        holds funds. Only Agent ID holders can send tips, and tips can only go
+        to a real .ai name, resolved on-chain.
+      </p>
+      <p>
+        <a id="contract-link" href="#" hidden>View contract on BscScan</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
