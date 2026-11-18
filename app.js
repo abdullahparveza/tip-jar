@@ -176,7 +176,7 @@ async function checkHolderStatus(address) {
 async function connectWallet() {
   if (!window.ethereum) {
     $("wallet-status").textContent =
-      "No wallet found. Install MetaMask or open this page in a wallet browser.";
+      "No wallet found. Install MetaMask or open this page in a wallet browser — or tip with your agent below.";
     return;
   }
 
@@ -346,6 +346,51 @@ async function sendTip() {
 }
 
 // ---------------------------------------------------------------------------
+// Agent prompt: the Agentic Wallet can't connect to websites, so Agent ID
+// holders tip through their agent. The prompt follows the name and amount
+// typed in the tip form above.
+// ---------------------------------------------------------------------------
+
+function agentPromptText() {
+  const handle = normalizeHandle($("handle-input").value) || "abdullahparvez";
+  const amount = $("amount-input").value || "0.001";
+  return (
+    "Tip " +
+    amount +
+    " BNB to " +
+    handle +
+    ".ai using Tip Jar on BNB Chain. Contract " +
+    CONTRACT_ADDRESS +
+    ", function tip(string handle). Confirm with me before sending."
+  );
+}
+
+function refreshAgentPrompt() {
+  $("agent-prompt").textContent = agentPromptText();
+}
+
+async function copyAgentPrompt() {
+  const text = agentPromptText();
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    // Fallback for browsers without clipboard permission (e.g. some
+    // in-app webviews): select-and-copy from a temporary textarea.
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+  const status = $("copy-status");
+  status.textContent = "Copied!";
+  setTimeout(() => {
+    status.textContent = "";
+  }, 2000);
+}
+
+// ---------------------------------------------------------------------------
 // Stats
 // ---------------------------------------------------------------------------
 
@@ -476,12 +521,15 @@ function init() {
   $("connect-btn").addEventListener("click", connectWallet);
   $("switch-network-btn").addEventListener("click", switchToBsc);
   $("tip-btn").addEventListener("click", sendTip);
+  $("copy-prompt-btn").addEventListener("click", copyAgentPrompt);
 
   let resolveTimer = null;
   $("handle-input").addEventListener("input", () => {
     clearTimeout(resolveTimer);
     resolveTimer = setTimeout(resolveCurrentHandle, 500);
+    refreshAgentPrompt();
   });
+  $("amount-input").addEventListener("input", refreshAgentPrompt);
 
   // React to wallet changes without a page reload.
   if (window.ethereum) {
@@ -505,6 +553,7 @@ function init() {
     window.ethereum.on("chainChanged", () => updateNetworkState());
   }
 
+  refreshAgentPrompt();
   refreshStats();
   loadRecentTips();
 }

@@ -248,8 +248,32 @@ body {
 
 .footer a,
 .status a,
-.tips-list a {
+.tips-list a,
+#agent-card a {
   color: var(--accent);
+}
+
+.prompt-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  word-break: break-word;
+  margin: 12px 0;
+}
+
+.copy-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.small {
+  font-size: 0.85rem;
 }
 
 @media (max-width: 480px) {

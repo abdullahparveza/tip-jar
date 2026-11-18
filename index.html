@@ -65,6 +65,33 @@
       <p id="tip-status" class="status" role="status"></p>
     </section>
 
+    <section class="card" id="agent-card">
+      <h2>Tip with your agent</h2>
+      <p class="muted">
+        The Binance Agentic Wallet can't connect to websites — it only acts
+        through your agent. Copy the prompt below, send it to your agent, and
+        it will tip from your Agentic Wallet after your approval.
+      </p>
+      <p id="agent-prompt" class="prompt-box"></p>
+      <div class="copy-row">
+        <button id="copy-prompt-btn" class="btn">Copy prompt</button>
+        <span id="copy-status" class="muted small"></span>
+      </div>
+      <p class="muted small">
+        The prompt follows the name and amount above — type them there first.
+        Contract
+        <a
+          id="agent-contract-link"
+          href="https://bscscan.com/address/0x5493b74ced2455434e4bf23518f2b1521c3cc44b"
+          target="_blank"
+          rel="noopener"
+          >0x5493b74c…cC44B</a
+        >
+        on BNB Chain (56) · function tip(string handle) · Only Agent ID
+        holders can tip.
+      </p>
+    </section>
+
     <section class="card" id="stats-card">
       <h2>Stats</h2>
       <div class="stats-grid">
