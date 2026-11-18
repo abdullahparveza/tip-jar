@@ -68,3 +68,8 @@ Tips go directly to the recipient — the contract never holds funds.
    message without sending a transaction; a wallet without an Agent ID
    should see the holder warning.
 5. Check the page on a mobile wallet browser.
+
+## Credits
+
+Demo video (`demo.mp4`) music: "Carefree" by Kevin MacLeod (incompetech.com),
+licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
