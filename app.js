@@ -353,7 +353,7 @@ async function sendTip() {
 
 function agentPromptText() {
   const handle = normalizeHandle($("handle-input").value) || "abdullahparvez";
-  const amount = $("amount-input").value || "0.001";
+  const amount = $("amount-input").value || "0.00001";
   return (
     "Tip " +
     amount +
